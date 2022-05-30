@@ -1,0 +1,28 @@
+version: '3.9'
+
+services:
+  mysql:
+    image: mysql:8
+    container_name: mysql
+    environment:
+      - "MYSQL_DATABASE=bzu"
+      - "MYSQL_USER=user"
+      - "MYSQL_PASSWORD=user"
+      - "MYSQL_ROOT_PASSWORD=root"
+    ports:
+      - "127.0.0.1:3307:3306"
+    volumes:
+      - C:/project/docker:/var/lib/mysql
+  app:
+    image: 'docker-sample:latest'
+    container_name: docker-sample
+    depends_on:
+      - mysql
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/bzu?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SERVER_PORT=9091
+    ports:
+      - "127.0.0.1:9092:9091"

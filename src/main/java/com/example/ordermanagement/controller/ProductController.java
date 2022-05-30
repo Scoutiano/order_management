@@ -3,6 +3,7 @@ package com.example.ordermanagement.controller;
 import com.example.ordermanagement.dto.ProductDto;
 import com.example.ordermanagement.model.Product;
 import com.example.ordermanagement.service.ProductService;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,14 +23,7 @@ public class ProductController {
 
     private final ProductService productService;
 
-    /**
-     * Path: {/api/v1/product}
-     * Method: GET
-     *
-     * Get a list of all products
-     *
-     * @return
-     */
+    @ApiOperation(value = "Get All Products REST API")
     @GetMapping()
     public ResponseEntity<List<ProductDto>> getAll() {
         List<Product> products = productService.getProducts();
@@ -38,63 +32,28 @@ public class ProductController {
                 .collect(Collectors.toList()));
     }
 
-    /**
-     * Path: {/api/v1/product/#id}
-     * Method: GET
-     *
-     * Get specific product by id
-     *
-     * @param id: id of specified product
-     * @return
-     */
+    @ApiOperation(value = "Get One Product By ID REST API")
     @GetMapping("/{id}")
     public ResponseEntity<ProductDto> getOne(@PathVariable Long id) {
         Product product = productService.getOne(id);
         return ResponseEntity.ok(productService.convertToDto(product));
     }
 
-    /**
-     * Path: {/api/v1/product/}
-     * Method: POST
-     *
-     * Create a product with specified information
-     *
-     * @param productDto: product data to be created
-     * @return
-     * @throws ParseException: Exception for the received date format
-     */
+    @ApiOperation(value = "Get All Orders REST API")
     @PostMapping()
     public ResponseEntity<ProductDto> create(@RequestBody ProductDto productDto) throws ParseException {
         Product product = productService.create(productDto);
         return ResponseEntity.ok(productService.convertToDto(product));
     }
 
-    /**
-     * Path: {/api/v1/product/#id}
-     * Method: PUT
-     *
-     * Update a product with specified information
-     *
-     * @param productDto: product data to be updated
-     * @param id: id of product to be updated
-     * @return
-     * @throws ParseException: Exception for the received date format
-     */
+    @ApiOperation(value = "Update Product By ID REST API")
     @PutMapping("/{id}")
     public ResponseEntity<ProductDto> update(@RequestBody ProductDto productDto, @PathVariable Long id) throws ParseException {
         Product product = productService.update(productDto, id);
         return ResponseEntity.ok(productService.convertToDto(product));
     }
 
-    /**
-     * Path: {/api/v1/product/#id}
-     * Method: PUT
-     *
-     * Delete a product with specified id
-     *
-     * @param id: id of product to be deleted
-     * @return
-     */
+    @ApiOperation(value = "Delete One Product By ID REST API")
     @DeleteMapping("/{id}")
     public ResponseEntity<Long> delete(@PathVariable Long id) {
         productService.delete(id);

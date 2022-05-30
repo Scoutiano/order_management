@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -36,12 +37,14 @@ public class OrderService {
         return orderRepository.findById(id).orElseThrow(() -> (new AssetNotFoundException(Entity.ORDER)));
     }
 
+    @Transactional
     public Order create(OrderDto orderDto) throws ParseException {
         Order order = convertToEntity(orderDto);
         productOrderService.create(order.getProductOrders());
         return orderRepository.save(order);
     }
 
+    @Transactional
     public Order update(OrderDto orderDto, Long id) throws ParseException {
         Order order = convertToEntity(orderDto);
         order.setId(id);
