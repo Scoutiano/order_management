@@ -5,5 +5,6 @@ public enum Entity {
     ORDER,
     PRODUCT,
     PRODUCTORDER,
-    STOCK
+    STOCK,
+    ROLE
 }

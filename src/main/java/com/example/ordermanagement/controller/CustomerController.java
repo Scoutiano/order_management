@@ -59,5 +59,4 @@ public class CustomerController {
         customerService.delete(id);
         return ResponseEntity.ok(id);
     }
-
 }

@@ -1,0 +1,11 @@
+package com.example.ordermanagement.repository;
+
+import com.example.ordermanagement.model.Role;
+import com.example.ordermanagement.model.Stock;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+
+public interface RoleRepository extends JpaRepository<Role, Long> {
+    List<Role> findByName(String role_admin);
+}
