@@ -47,6 +47,12 @@ public class AuthController {
     @Autowired
     private JwtTokenProvider tokenProvider;
 
+    /**
+     * Sign in to API using credentials provided in LoginDto object
+     *
+     * @param loginDto contains sign in credentials
+     * @return response indicating whether the request was authenticated or not
+     */
     @ApiOperation(value = "REST API to Register or Signup user to Blog app")
     @PostMapping("/signin")
     public ResponseEntity<JWTAuthResponse> authenticateUser(@RequestBody LoginDto loginDto) {
@@ -61,6 +67,13 @@ public class AuthController {
         return ResponseEntity.ok(new JWTAuthResponse(token));
     }
 
+    /**
+     * Sign up to API using credentials provided in SignUpDto
+     *
+     * @param signUpDto contains sign up credentials
+     * @return
+     * @throws ParseException
+     */
     @ApiOperation(value = "REST API to Signin or Login user to Blog app")
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@RequestBody SignUpDto signUpDto) throws ParseException {

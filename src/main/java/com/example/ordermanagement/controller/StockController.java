@@ -23,6 +23,11 @@ public class StockController {
 
     private final StockService stockService;
 
+    /**
+     * Get a list of all stocks from REST API
+     *
+     * @return List of stocks
+     */
     @ApiOperation(value = "Get All Stocks REST API")
     @GetMapping()
     public ResponseEntity<List<StockDto>> getAll() {
@@ -32,6 +37,12 @@ public class StockController {
                 .collect(Collectors.toList()));
     }
 
+    /**
+     * Get a single stock by their ID
+     *
+     * @param id Id of stock to be retrieved
+     * @return stock with provided Id
+     */
     @ApiOperation(value = "Get One Stock By ID REST API")
     @GetMapping("/{id}")
     public ResponseEntity<StockDto> getOne(@PathVariable Long id) {
@@ -39,6 +50,12 @@ public class StockController {
         return ResponseEntity.ok(stockService.convertToDto(stock));
     }
 
+    /**
+     * Get a set of stocks for a product by product id
+     *
+     * @param id Id of product whose stocks are to be retrieved
+     * @return set of stocks with provided product Id
+     */
     @ApiOperation(value = "Get One Product's Stocks By ID REST API")
     @GetMapping("/product/{id}")
     public ResponseEntity<List<StockDto>> getProductStocks(@PathVariable Long id) {
@@ -48,6 +65,13 @@ public class StockController {
                 .collect(Collectors.toList()));
     }
 
+    /**
+     * Create an stock
+     *
+     * @param stockDto information of stock to be created
+     * @return verify creation by returning created stock information
+     * @throws ParseException Date formatting error
+     */
     @ApiOperation(value = "Create Product REST API")
     @PostMapping("/product/")
     public ResponseEntity<StockDto> create(@RequestBody StockDto stockDto) throws ParseException {
@@ -55,6 +79,14 @@ public class StockController {
         return ResponseEntity.ok(stockService.convertToDto(stock));
     }
 
+    /**
+     * Update an existing stock information
+     *
+     * @param stockDto updated order information
+     * @param id id of stock to be updated
+     * @return verify the updating of stock
+     * @throws ParseException
+     */
     @ApiOperation(value = "Update One Product By ID REST API")
     @PutMapping("/{id}")
     public ResponseEntity<StockDto> update(@RequestBody StockDto stockDto, @PathVariable Long id) throws ParseException {
@@ -62,6 +94,12 @@ public class StockController {
         return ResponseEntity.ok(stockService.convertToDto(stock));
     }
 
+    /**
+     * Delete a stock by Id
+     *
+     * @param id id of stock to be deleted
+     * @return returns id of deleted stock
+     */
     @ApiOperation(value = "Delete One Product By ID REST API")
     @DeleteMapping("/{id}")
     public ResponseEntity<Long> delete(@PathVariable Long id) {

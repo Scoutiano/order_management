@@ -23,6 +23,11 @@ public class ProductController {
 
     private final ProductService productService;
 
+    /**
+     * Get a list of all products from REST API
+     *
+     * @return List of products
+     */
     @ApiOperation(value = "Get All Products REST API")
     @GetMapping()
     public ResponseEntity<List<ProductDto>> getAll() {
@@ -32,6 +37,12 @@ public class ProductController {
                 .collect(Collectors.toList()));
     }
 
+    /**
+     * Get a single product by their ID
+     *
+     * @param id Id of product to be retrieved
+     * @return product with provided Id
+     */
     @ApiOperation(value = "Get One Product By ID REST API")
     @GetMapping("/{id}")
     public ResponseEntity<ProductDto> getOne(@PathVariable Long id) {
@@ -39,13 +50,28 @@ public class ProductController {
         return ResponseEntity.ok(productService.convertToDto(product));
     }
 
-    @ApiOperation(value = "Get All Orders REST API")
+    /**
+     * Create an product
+     *
+     * @param productDto information of product to be created
+     * @return verify creation by returning created product information
+     * @throws ParseException Date formatting error
+     */
+    @ApiOperation(value = "Create order REST API")
     @PostMapping()
     public ResponseEntity<ProductDto> create(@RequestBody ProductDto productDto) throws ParseException {
         Product product = productService.create(productDto);
         return ResponseEntity.ok(productService.convertToDto(product));
     }
 
+    /**
+     * Update an existing product information
+     *
+     * @param productDto updated order information
+     * @param id id of product to be updated
+     * @return verify the updating of product
+     * @throws ParseException
+     */
     @ApiOperation(value = "Update Product By ID REST API")
     @PutMapping("/{id}")
     public ResponseEntity<ProductDto> update(@RequestBody ProductDto productDto, @PathVariable Long id) throws ParseException {
@@ -53,6 +79,12 @@ public class ProductController {
         return ResponseEntity.ok(productService.convertToDto(product));
     }
 
+    /**
+     * Delete a product by Id
+     *
+     * @param id id of order to be deleted
+     * @return returns id of deleted order
+     */
     @ApiOperation(value = "Delete One Product By ID REST API")
     @DeleteMapping("/{id}")
     public ResponseEntity<Long> delete(@PathVariable Long id) {
